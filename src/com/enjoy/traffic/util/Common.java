@@ -176,8 +176,8 @@ public final class Common {
 	public static String RedisPort="redis_port";
 	public static String RedisNum="redis_num";
 	//并发开启线程数
-	public static String DahuaWaterThread="dahuaWaterThread";
-	public static String DahuaIllegalThread="dahuaIllegalThread";
+	public static String WfThread="WfThread";
+	public static String GcThread="GcThread";
 	public static String VideoDahuaWaterThread="videoDahuaWaterThread";
 	
 	public static String HikvisonWaterThread="hikvisonWaterThread";

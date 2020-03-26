@@ -12,11 +12,14 @@ import com.enjoy.traffic.util.Common;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.factory.MongoDBFactory;
 
+import redis.clients.jedis.Jedis;
+
 
 public class DataSaveGCMongodb implements Runnable{
 	private MongoCollection<Document> col;
 	private MongoDBFactory mongoDBFactory;
 	private RedisUtil redis;
+	private Jedis jed;
 	public DataSaveGCMongodb() {
 		// TODO Auto-generated constructor stub
 		redis=RedisFactory.createRedis();
@@ -25,6 +28,7 @@ public class DataSaveGCMongodb implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
+			jed=redis.getJedis();
 			mongoDBFactory=new MongoDBFactory();
 			mongoDBFactory.init();
 			String cname = Common.getProperties().getProperty(Common.MRS_VEH_SNAP);
@@ -34,10 +38,11 @@ public class DataSaveGCMongodb implements Runnable{
 		}
 	    while(true) {
 	        try {
-	        	String json=redis.getJedis().rpop(Common.MongoDbGCKey);
+	        	String json=jed.rpop(Common.MongoDbGCKey);
 				if(json==null){
 					Thread.sleep(Common.delay());//no data wating...
 				}else{
+					System.out.println(json);
 					Map map=(Map)JSONValue.parse(json);
 					//mongodb save
 					Document document = new Document();
