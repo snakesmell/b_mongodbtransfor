@@ -20,6 +20,7 @@ public class DataSaveGCMongodb implements Runnable{
 	private MongoDBFactory mongoDBFactory;
 	private RedisUtil redis;
 	private Jedis jed;
+	private String MongoDbGCRedisKey;
 	public DataSaveGCMongodb() {
 		// TODO Auto-generated constructor stub
 		redis=RedisFactory.createRedis();
@@ -28,6 +29,7 @@ public class DataSaveGCMongodb implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
+			MongoDbGCRedisKey = Common.getProperties().getProperty(Common.MongoDbGCRedisKey);
 			jed=redis.getJedis();
 			mongoDBFactory=new MongoDBFactory();
 			mongoDBFactory.init();
@@ -38,7 +40,7 @@ public class DataSaveGCMongodb implements Runnable{
 		}
 	    while(true) {
 	        try {
-	        	String json=jed.rpop(Common.MongoDbGCKey);
+	        	String json=jed.rpop(MongoDbGCRedisKey);
 				if(json==null){
 					Thread.sleep(Common.delay());//no data wating...
 				}else{

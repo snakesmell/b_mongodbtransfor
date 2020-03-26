@@ -58,8 +58,8 @@ public final class Common {
 		return date;
 	}
 	
-	public static String MongoDbWFKey="DahuaIllegalList";
-	public static String MongoDbGCKey="DahuaWaterList";
+	public static String MongoDbWFRedisKey="MongoDbWFRedisKey";
+	public static String MongoDbGCRedisKey="MongoDbGCRedisKey";
 	public static String ILG_INFO="ILG_INFO";
 	public static String MRS_VEH_SNAP="MRS_VEH_SNAP";
 	

@@ -20,6 +20,7 @@ public class DataSaveWFMongodb implements Runnable{
 	private MongoDBFactory mongoDBFactory;
 	private RedisUtil redis;
 	private Jedis jed;
+	private String MongoDbWFRedisKey;
 	public DataSaveWFMongodb() {
 		// TODO Auto-generated constructor stub
 		redis=RedisFactory.createRedis();
@@ -28,6 +29,7 @@ public class DataSaveWFMongodb implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
+			MongoDbWFRedisKey = Common.getProperties().getProperty(Common.MongoDbWFRedisKey);
 			jed=redis.getJedis();
 			mongoDBFactory=new MongoDBFactory();
 			mongoDBFactory.init();
@@ -38,7 +40,7 @@ public class DataSaveWFMongodb implements Runnable{
 		}
 	    while(true) {
 	        try {
-	        	String json=jed.rpop(Common.MongoDbWFKey);
+	        	String json=jed.rpop(MongoDbWFRedisKey);
 				if(json==null){
 					Thread.sleep(Common.delay());//no data wating...
 				}else{
