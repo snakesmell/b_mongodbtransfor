@@ -13,11 +13,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.factory.MongoDBFactory;
 
 
-public class DataSaveMongodb implements Runnable{
+public class DataSaveGCMongodb implements Runnable{
 	private MongoCollection<Document> col;
 	private MongoDBFactory mongoDBFactory;
 	private RedisUtil redis;
-	public DataSaveMongodb() {
+	public DataSaveGCMongodb() {
 		// TODO Auto-generated constructor stub
 		redis=RedisFactory.createRedis();
 	}
@@ -25,14 +25,16 @@ public class DataSaveMongodb implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			String cname = Common.getProperties().getProperty("colName");
+			mongoDBFactory=new MongoDBFactory();
+			mongoDBFactory.init();
+			String cname = Common.getProperties().getProperty(Common.MRS_VEH_SNAP);
 			col=mongoDBFactory.getCollection(cname);//获取集合
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	    while(true) {
 	        try {
-	        	String json=redis.getJedis().rpop("");
+	        	String json=redis.getJedis().rpop(Common.MongoDbGCKey);
 				if(json==null){
 					Thread.sleep(Common.delay());//no data wating...
 				}else{

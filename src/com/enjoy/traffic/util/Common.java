@@ -58,6 +58,11 @@ public final class Common {
 		return date;
 	}
 	
+	public static String MongoDbWFKey="DahuaIllegalList";
+	public static String MongoDbGCKey="DahuaWaterList";
+	public static String ILG_INFO="ILG_INFO";
+	public static String MRS_VEH_SNAP="MRS_VEH_SNAP";
+	
 	public static boolean True=true;
 	public static boolean False=false;
 	//MQ配置表

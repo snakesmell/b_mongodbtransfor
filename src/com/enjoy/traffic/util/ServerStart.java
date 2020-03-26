@@ -6,7 +6,8 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.enjoy.traffic.deal.DataSaveMongodb;
+import com.enjoy.traffic.deal.DataSaveGCMongodb;
+import com.enjoy.traffic.deal.DataSaveWFMongodb;
 
 public class ServerStart implements ServletContextListener{
 	private final Logger logger= LogManager.getLogger(this.getClass());
@@ -17,8 +18,11 @@ public class ServerStart implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-		DataSaveMongodb dataSaveMongodb = new DataSaveMongodb();
-		new Thread(dataSaveMongodb).start();
+		//违法
+		DataSaveWFMongodb wf = new DataSaveWFMongodb();
+		new Thread(wf).start();
+		//过车
+		DataSaveGCMongodb gc = new DataSaveGCMongodb();
+		new Thread(gc).start();
 	}
 }
